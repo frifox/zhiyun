@@ -72,12 +72,12 @@ YYYY above are values between 0 and 4095 (0x0 and 0xFFF)
 
 The further you're from 2048, the faster gimbal will rotate. For example:
 ```
-// rotate left at full speed
+// turn left at full speed
 06 1001 0800 XXXX
 06 1002 0800 XXXX
 06 1003 0000 XXXX // X axis
 
-// rotate right at full speed
+// turn right at full speed
 06 1001 0800 XXXX
 06 1002 0800 XXXX
 06 1003 0FFF XXXX // X axis
