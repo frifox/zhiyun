@@ -5,31 +5,28 @@ I have Zhiyun Crane Plus gimbal and Sony A6500 camera, but info below may apply 
 # Bluetooth Packets
 Gimbal is controlled by sending it bluetooth packets. All commands of interest were sent to `D44BC439-ABFD-45A2-B575-925416129600` characteristic. Packets started with 06 byte, followed by 2-byte command, followed by 2-byte value, and ended with 2-byte CRC16-CCITT checksum. For example:
 
-https://play.golang.org/p/EJigaVo0R5x
+https://play.golang.org/p/F3CI8iqkd6l
 
 ```
 package main
 
 import (
+  "fmt"
   "bytes"
   "encoding/binary"
-  "fmt"
   "github.com/howeyc/crc16"
 )
 
 func main() {
-  var packet bytes.Buffer
+  packet := new(bytes.Buffer)
 
-  packet.Write([]byte{0x6}) // packet prefix
+  packet.Write([]byte{0x6})       // packet prefix
   packet.Write([]byte{0x1, 0x27}) // command
-  packet.Write([]byte{0x0, 0x0}) // value
+  packet.Write([]byte{0x0, 0x0})  // value
 
-  // calc packet's CRC
-  crcInt16 := crc16.Checksum(packet.Bytes(), crc16.CCITTFalseTable)
-
-  crcBytes := []byte{0x0, 0x0}
-  binary.BigEndian.PutUint16(crcBytes, crcInt16)
-  packet.Write(crcBytes)
+  // append packet's CRC
+  crc := crc16.Checksum(packet.Bytes(), crc16.CCITTFalseTable)
+  binary.Write(packet, binary.BigEndian, crc)
 
   // compiled packet
   fmt.Printf("%X\n", packet.Bytes())
