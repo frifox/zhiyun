@@ -1,6 +1,6 @@
 # Zhiyun Gimbal Bluetooth Research
 
-I have Zhiyun Crane Plus gimbal and Sony A6500 camera, but info below may apply to other gimbal & camera combos. All code samples are in Go because that's what I'm most comfortable with. Most of the data was obtained by watching bluetooth traffic from Zhiyun's ZY Play app using Apple's PacketLogger.
+I have Zhiyun Crane Plus gimbal and Sony A6500 camera, but info below may apply to other gimbal & camera combos. Most of the data was obtained by watching bluetooth traffic from Zhiyun's ZY Play app using Apple's PacketLogger.
 
 # Bluetooth Packets
 Gimbal is controlled by sending it bluetooth packets. All commands of interest were sent to `D44BC439-ABFD-45A2-B575-925416129600` characteristic. Packets started with 06 byte, followed by 2-byte command, followed by 2-byte value, and ended with 2-byte CRC16-CCITT checksum. For example:
